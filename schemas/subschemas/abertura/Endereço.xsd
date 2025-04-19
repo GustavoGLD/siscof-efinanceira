@@ -1,0 +1,88 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="Endereco">
+        <xs:complexType>
+          <xs:annotation>
+            <xs:documentation>Endereço do responsável pela RMF</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+            <xs:element name="Logradouro" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Logradouro</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="100"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="Numero" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Número</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="20"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="Complemento" minOccurs="0" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Complemento</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="20"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="Bairro" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Bairro</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="100"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="CEP" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Código de Endereçamento Postal do endereço</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="8"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="Municipio" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Município</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="100"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="UF" minOccurs="1" maxOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Unidade da Federação</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="2"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+</xs:schema>

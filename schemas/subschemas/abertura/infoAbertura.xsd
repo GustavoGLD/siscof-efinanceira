@@ -1,0 +1,29 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="infoAbertura">
+    <xs:complexType>
+      <xs:annotation>
+        <xs:documentation>Informações de Abertura</xs:documentation>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="dtInicio" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Data Inicial</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:date">
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="dtFim" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>Data Final</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:date">
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

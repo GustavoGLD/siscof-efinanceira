@@ -1,0 +1,20 @@
+                    <xs:element name="paisResid" minOccurs="1" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>País de residência fiscal da Entidade Declarante</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Pais" minOccurs="1" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>Sigla do país de residência da Entidade Declarante</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                                <xs:maxLength value="2"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>

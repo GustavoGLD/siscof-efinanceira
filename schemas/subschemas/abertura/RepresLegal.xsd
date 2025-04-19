@@ -1,0 +1,75 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="RepresLegal">
+      <xs:complexType>
+        <xs:annotation>
+          <xs:documentation>Informações do Representante Legal</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="CPF" minOccurs="1" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>CPF</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="11"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="Setor" minOccurs="1" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation>Setor</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="90"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="Telefone" minOccurs="1" maxOccurs="1">
+            <xs:complexType>
+              <xs:annotation>
+                <xs:documentation>Telefone do Representante Legal</xs:documentation>
+              </xs:annotation>
+              <xs:sequence>
+                <xs:element name="DDD" minOccurs="1" maxOccurs="1">
+                  <xs:annotation>
+                    <xs:documentation>DDD do Telefone</xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:minLength value="1"/>
+                      <xs:maxLength value="3"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="Numero" minOccurs="1" maxOccurs="1">
+                  <xs:annotation>
+                    <xs:documentation>Número do Telefone</xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:minLength value="1"/>
+                      <xs:maxLength value="10"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="Ramal" minOccurs="0" maxOccurs="1">
+                  <xs:annotation>
+                    <xs:documentation>Ramal</xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:minLength value="1"/>
+                      <xs:maxLength value="4"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+</xs:schema>
