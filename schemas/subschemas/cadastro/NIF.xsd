@@ -1,42 +1,44 @@
-                    <xs:element name="NIF" minOccurs="0" maxOccurs="unbounded">
-                      <xs:annotation>
-                        <xs:documentation>Informações de identificação fiscal no exterior da Entidade Declarante</xs:documentation>
-                      </xs:annotation>
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="NumeroNIF" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:annotation>
-                                <xs:documentation>Número de Identificação Fiscal no Exterior</xs:documentation>
-                              </xs:annotation>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                                <xs:maxLength value="25"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                          <xs:element name="PaisEmissao" minOccurs="1" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:annotation>
-                                <xs:documentation>Pais de emissão do NIF</xs:documentation>
-                              </xs:annotation>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                                <xs:maxLength value="2"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                          <xs:element name="tpNIF" minOccurs="0" maxOccurs="1">
-                            <xs:simpleType>
-                              <xs:annotation>
-                                <xs:documentation>Tipo do NIF</xs:documentation>
-                              </xs:annotation>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                                <xs:maxLength value="30"/>
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="NIF">
+    <xs:annotation>
+      <xs:documentation>Informações de identificação fiscal no exterior da Entidade Declarante</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="NumeroNIF" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:annotation>
+              <xs:documentation>Número de Identificação Fiscal no Exterior</xs:documentation>
+            </xs:annotation>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="25"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="PaisEmissao" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:annotation>
+              <xs:documentation>Pais de emissão do NIF</xs:documentation>
+            </xs:annotation>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="2"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="tpNIF" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:annotation>
+              <xs:documentation>Tipo do NIF</xs:documentation>
+            </xs:annotation>
+            <xs:restriction base="xs:string">
+              <xs:minLength value="1"/>
+              <xs:maxLength value="30"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

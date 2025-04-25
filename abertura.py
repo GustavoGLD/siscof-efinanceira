@@ -389,6 +389,9 @@ class TipoAplicativoEmissor:
 
 
 class VerAplic:
+    """Este campo se destina a permitir um controle, pela própria declarante, da versão do aplicativo que
+    foi utilizado para gerar o arquivo.
+    """
     def __init__(self, value: str):
         if not value or len(value) < 1 or len(value) > 20:
             raise ValueError("Versão do aplicativo inválida")
@@ -403,6 +406,8 @@ class VerAplic:
 
 
 class NumeroRecibo:
+    """Número do recibo do arquivo a ser retificado"""
+
     def __init__(self, value: str):
         padrao = '^[0-9]{1,18}-[0-9]{2}-[0-9]{3}-[0-9]{4}-[0-9]{1,18}$'
 
