@@ -1023,6 +1023,21 @@ import unittest
 from lxml import etree as LET
 
 class TestXmlValidation(unittest.TestCase):
+    def validar_xml(self, objeto, builder, schema_path):
+        xml_element = builder.build(objeto)
+        xml_str = ET.tostring(xml_element, encoding="utf-8")
+        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
+
+        with open(schema_path, "r") as f:
+            schema_doc = LET.parse(f)
+        schema = LET.XMLSchema(schema_doc)
+
+        doc = LET.fromstring(xml_str)
+        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
+
+        if not schema.validate(doc):
+            print(schema.error_log)
+
     def test_Endereco(self):
         # Teste de criação de um objeto Endereco
         endereco = Endereco(
@@ -1035,21 +1050,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = EnderecoXmlBuilder()
-        xml_element = builder.build(endereco)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/Endereco.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(endereco, builder, "schemas/subschemas/cadastro/Endereco.xsd")
 
     def test_EnderecoEstrutura(self):
         # Teste de criação de um objeto EnderecoEstrutura
@@ -1069,21 +1070,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = EnderecoOutrosEnderecoEstruturaXmlBuilder()
-        xml_element = builder.build(endereco_estrutura)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/EnderecoEstrutura.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(endereco_estrutura, builder, "schemas/subschemas/cadastro/EnderecoEstrutura.xsd")
 
     def test_EnderecoOutros(self):
         # Teste de criação de um objeto EnderecoOutros
@@ -1108,21 +1095,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = EnderecoOutros1XmlBuilder()
-        xml_element = builder.build(endereco_outros)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/EnderecoOutros.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(endereco_outros, builder, "schemas/subschemas/cadastro/EnderecoOutros.xsd")
 
     def test_ideDeclarante(self):
         ide_declarante = IdeDeclarante(
@@ -1130,21 +1103,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = IdeDeclaranteXmlBuilder()
-        xml_element = builder.build(ide_declarante)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/ideDeclarante.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(ide_declarante, builder, "schemas/subschemas/cadastro/ideDeclarante.xsd")
 
     def test_ideEvento(self):
         ide_evento = IdeEvento(
@@ -1154,45 +1113,15 @@ class TestXmlValidation(unittest.TestCase):
             ver_aplic=VerAplic.from_str("1.0"),
             nr_recibo=NumeroRecibo.from_str("12345-12-345-6789-67890")
         )
-
         builder = IdeEventoXmlBuilder()
-        xml_element = builder.build(ide_evento)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/ideEvento.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(ide_evento, builder, "schemas/subschemas/cadastro/ideEvento.xsd")
 
     def test_infoTpInstPgto1(self):
         info_tp_inst_pgto1 = InfoTpInstPgto1(
             tp_inst_pgto=TpInstPgto("1")
         )
-
         builder = InfoTpInstPgto1XmlBuilder()
-        xml_element = builder.build(info_tp_inst_pgto1)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/infoTpInstPgto.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(info_tp_inst_pgto1, builder, "schemas/subschemas/cadastro/infoTpInstPgto.xsd")
 
     def test_InfoCadastro(self):
         info_cadastro = InfoCadastro(
@@ -1204,45 +1133,15 @@ class TestXmlValidation(unittest.TestCase):
             pais=Pais.from_str("BR"),
             pais_resid1=PaisResid1(PaisResidSigla("BR")),
         )
-
         builder = InfoCadastroXmlBuilder()
-        xml_element = builder.build(info_cadastro)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/infoCadastro.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(info_cadastro, builder, "schemas/subschemas/cadastro/infoCadastro.xsd")
 
     def test_paisResid(self):
         pais_resid1 = PaisResid1(
             pais_resid_pais=PaisResidSigla.from_str("BR")
         )
-
         builder = PaisResid1XmlBuilder()
-        xml_element = builder.build(pais_resid1)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/paisResid.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(pais_resid1, builder, "schemas/subschemas/cadastro/paisResid.xsd")
 
     def test_EvtCadDeclarante(self):
         evt_cad_declarante = EvtCadDeclarante(
@@ -1266,68 +1165,14 @@ class TestXmlValidation(unittest.TestCase):
                 pais_resid1=PaisResid1(PaisResidSigla("BR")),
             ),
         )
-
         builder = EvtCadDeclaranteXmlBuilder()
-        xml_element = builder.build(evt_cad_declarante)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/evtCadDeclarante.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
-
-    def test_pais_resid(self):
-        # Teste de criação de um objeto PaisResid1
-        pais_resid1 = PaisResid1(
-            pais_resid_pais=PaisResidSigla('BR')
-        )
-
-        builder = PaisResid1XmlBuilder()
-        xml_element = builder.build(pais_resid1)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/paisResid.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(evt_cad_declarante, builder, "schemas/subschemas/cadastro/evtCadDeclarante.xsd")
 
     def test_NIF1(self):
-        # Teste de criação de um objeto NIF1
         nif1 = NIF1(
             numero_nif=NumeroNIF.from_str("123456789"),
             pais_emissao=PaisEmissao.from_str("BR"),
             tp_nif=TpNIF.from_str("1")
         )
-
         builder = NIF1XmlBuilder()
-        xml_element = builder.build(nif1)
-        xml_str = ET.tostring(xml_element, encoding="utf-8")
-        print(minidom.parseString(xml_str).toprettyxml(indent="  "))
-
-        with open("schemas/subschemas/cadastro/NIF.xsd", "r") as f:
-            schema_doc = LET.parse(f)
-        schema = LET.XMLSchema(schema_doc)
-
-        # Valida XML
-        doc = LET.fromstring(xml_str)
-        self.assertTrue(schema.validate(doc), f"\n{str(schema.error_log)}")
-
-        # Debug em caso de falha
-        if not schema.validate(doc):
-            print(schema.error_log)
+        self.validar_xml(nif1, builder, "schemas/subschemas/cadastro/NIF.xsd")
