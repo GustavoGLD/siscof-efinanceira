@@ -54,6 +54,7 @@ TYPE_MAPPING = {
     "xs:string": "str",
     "xs:unsignedInt": "int",
     "xs:ID": "str",
+    "xs:date": "str",  # Tratar xs:date como string para from_str
 }
 
 # Função para converter snake_case para CamelCase
@@ -82,19 +83,39 @@ def sanitize_string(text: str) -> str:
 # Função auxiliar para gerar argumentos de teste para um elemento
 def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str) -> str:
     if isinstance(elem.type, XsdSimpleType):
-        # Para simpleType, usar from_str com um valor de exemplo
+        # Para simpleType, gerar valor de exemplo com base no tipo e facets
         tipo: XsdAtomicBuiltin = elem.type.primitive_type
         python_type = tipo.python_type
         typ = TYPE_MAPPING.get(python_type, "str")
+        # Valor padrão baseado no tipo
         example_value = "1" if typ == "int" else "example"
+        # Ajustar com base no nome do elemento (e.g., cnpjDeclarante)
+        if elem.local_name.lower() == "cnpjdeclarante":
+            example_value = "12.345.678/0001-99"  # Formato CNPJ válido
+        elif tipo.name == "xs:date":
+            example_value = "2023-01-01"  # Formato de data ISO
+        # Ajustar com base em facets
         if elem.type.facets.get("pattern"):
             pattern = elem.type.facets["pattern"].pattern
             if pattern == "[1|2|3]":
                 example_value = "1"
-            elif pattern == "[0-9]{1,18}[-][0-9]{2}[-][0-9]{3}[-][0-9]{4}[-][0-9]{1,18}":
-                example_value = "123-12-123-1234-123"
             elif pattern == "[1|2]":
                 example_value = "1"
+            elif pattern == "[0-9]{1,18}[-][0-9]{2}[-][0-9]{3}[-][0-9]{4}[-][0-9]{1,18}":
+                example_value = "123-12-123-1234-123"
+            elif pattern == "[0-9]{14}":  # Possível CNPJ sem formatação
+                example_value = "12345678000199"
+        elif elem.type.facets.get("enumeration"):
+            # Usar o primeiro valor da enumeração, se disponível
+            enum_values = [e.value for e in elem.type.facets["enumeration"].enumeration]
+            example_value = enum_values[0] if enum_values else example_value
+        elif elem.type.facets.get("minLength") or elem.type.facets.get("maxLength"):
+            # Ajustar string para atender minLength/maxLength
+            min_length = elem.type.facets.get("minLength", 0).value if elem.type.facets.get("minLength") else 0
+            max_length = elem.type.facets.get("maxLength", 100).value if elem.type.facets.get("maxLength") else 100
+            example_value = "example"[:max_length]
+            if len(example_value) < min_length:
+                example_value = example_value + "x" * (min_length - len(example_value))
         return f"{snake_to_camel(elem.local_name)}.from_str({example_value!r})"
     elif isinstance(elem.type, XsdComplexType):
         # Para complexType, construir instância com argumentos recursivos
@@ -107,9 +128,9 @@ def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str)
         # Elementos filhos
         if hasattr(elem.type.content, "iter_elements"):
             for child in elem.type.content.iter_elements():
-                if child.local_name is None:
-                    continue
                 child_name = child.local_name
+                if not child_name:
+                    continue
                 child_camel = snake_to_camel(child_name)
                 is_list = child.max_occurs is None or child.max_occurs > 1
                 opt = child.min_occurs == 0
@@ -189,14 +210,29 @@ def process_element(
         )
         # Exemplo para teste
         example_value = "1" if typ == "int" else "example"
+        if name.lower() == "cnpjdeclarante":
+            example_value = "12.345.678/0001-99"  # Formato CNPJ válido
+        elif ct.name == "xs:date":
+            example_value = "2023-01-01"  # Formato de data ISO
         if ct.facets.get("pattern"):
             pattern = ct.facets["pattern"].pattern
             if pattern == "[1|2|3]":
                 example_value = "1"
-            elif pattern == "[0-9]{1,18}[-][0-9]{2}[-][0-9]{3}[-][0-9]{4}[-][0-9]{1,18}":
-                example_value = "123-12-123-1234-123"
             elif pattern == "[1|2]":
                 example_value = "1"
+            elif pattern == "[0-9]{1,18}[-][0-9]{2}[-][0-9]{3}[-][0-9]{4}[-][0-9]{1,18}":
+                example_value = "123-12-123-1234-123"
+            elif pattern == "[0-9]{14}":  # Possível CNPJ sem formatação
+                example_value = "12345678000199"
+        elif ct.facets.get("enumeration"):
+            enum_values = [e.value for e in ct.facets["enumeration"].enumeration]
+            example_value = enum_values[0] if enum_values else example_value
+        elif ct.facets.get("minLength") or ct.facets.get("maxLength"):
+            min_length = ct.facets.get("minLength", 0).value if ct.facets.get("minLength") else 0
+            max_length = ct.facets.get("maxLength", 100).value if ct.facets.get("maxLength") else 100
+            example_value = "example"[:max_length]
+            if len(example_value) < min_length:
+                example_value = example_value + "x" * (min_length - len(example_value))
         out["tests"].append(
             TEMPLATE_TEST.format(
                 tag=tag,
@@ -224,7 +260,7 @@ def process_element(
             opt = child.min_occurs == 0
             is_list = child.max_occurs is None or child.max_occurs > 1
             t = f"List[{child_camel}]" if is_list else child_camel
-            arg = f"{child_name}: {'Optional['+t+']' if opt else t}"
+            arg = f'{child_name}: "{'Optional['+t+']' if opt else t}"'
             fields.append(arg)
             assigns.append(f"        self.{child_name} = {child_name}")
             # Builder para filho
