@@ -97,9 +97,6 @@ def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str)
                 example_value = "1"
         return f"{snake_to_camel(elem.local_name)}.from_str({example_value!r})"
     elif isinstance(elem.type, XsdComplexType):
-        if not hasattr(elem.type.content, "iter_elements"):
-            return "None"
-
         # Para complexType, construir instância com argumentos recursivos
         args = []
         # Atributos
@@ -108,20 +105,24 @@ def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str)
                 attr_typ = TYPE_MAPPING.get(attr.type.name, "str")
                 args.append(f"{attr_name}='example_id'" if attr_typ == "str" else f"{attr_name}=1")
         # Elementos filhos
-
-        print(elem)
-        for child in elem.type.content.iter_elements():
-            if not isinstance(child.type, XsdElement):
-                continue
-            child_name = child.local_name
-            print(child)
-            child_camel = snake_to_camel(child_name)
-            is_list = child.max_occurs is None or child.max_occurs > 1
-            child_arg = generate_test_args(child, ns_map, target_ns)
-            if is_list:
-                args.append(f"{child_name}=[{child_arg}]")
-            else:
-                args.append(f"{child_name}={child_arg}")
+        if hasattr(elem.type.content, "iter_elements"):
+            for child in elem.type.content.iter_elements():
+                if child.local_name is None:
+                    continue
+                child_name = child.local_name
+                child_camel = snake_to_camel(child_name)
+                is_list = child.max_occurs is None or child.max_occurs > 1
+                opt = child.min_occurs == 0
+                child_arg = generate_test_args(child, ns_map, target_ns)
+                if opt and not is_list:
+                    args.append(f"{child_name}=None")  # Optional fields can be None
+                elif is_list:
+                    args.append(f"{child_name}=[{child_arg}]")
+                else:
+                    args.append(f"{child_name}={child_arg}")
+        # Se não há argumentos, retornar construtor vazio
+        if not args:
+            return f"{snake_to_camel(elem.local_name)}()"
         return f"{snake_to_camel(elem.local_name)}({', '.join(args)})"
     return "None"  # Fallback para elementos sem tipo definido (e.g., referências)
 
