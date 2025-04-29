@@ -79,6 +79,52 @@ def sanitize_string(text: str) -> str:
     text = re.sub(r'\s+', ' ', text.strip())
     return text
 
+# Função auxiliar para gerar argumentos de teste para um elemento
+def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str) -> str:
+    if isinstance(elem.type, XsdSimpleType):
+        # Para simpleType, usar from_str com um valor de exemplo
+        tipo: XsdAtomicBuiltin = elem.type.primitive_type
+        python_type = tipo.python_type
+        typ = TYPE_MAPPING.get(python_type, "str")
+        example_value = "1" if typ == "int" else "example"
+        if elem.type.facets.get("pattern"):
+            pattern = elem.type.facets["pattern"].pattern
+            if pattern == "[1|2|3]":
+                example_value = "1"
+            elif pattern == "[0-9]{1,18}[-][0-9]{2}[-][0-9]{3}[-][0-9]{4}[-][0-9]{1,18}":
+                example_value = "123-12-123-1234-123"
+            elif pattern == "[1|2]":
+                example_value = "1"
+        return f"{snake_to_camel(elem.local_name)}.from_str({example_value!r})"
+    elif isinstance(elem.type, XsdComplexType):
+        if not hasattr(elem.type.content, "iter_elements"):
+            return "None"
+
+        # Para complexType, construir instância com argumentos recursivos
+        args = []
+        # Atributos
+        for attr_name, attr in elem.type.attributes.items():
+            if attr.use == "required":
+                attr_typ = TYPE_MAPPING.get(attr.type.name, "str")
+                args.append(f"{attr_name}='example_id'" if attr_typ == "str" else f"{attr_name}=1")
+        # Elementos filhos
+
+        print(elem)
+        for child in elem.type.content.iter_elements():
+            if not isinstance(child.type, XsdElement):
+                continue
+            child_name = child.local_name
+            print(child)
+            child_camel = snake_to_camel(child_name)
+            is_list = child.max_occurs is None or child.max_occurs > 1
+            child_arg = generate_test_args(child, ns_map, target_ns)
+            if is_list:
+                args.append(f"{child_name}=[{child_arg}]")
+            else:
+                args.append(f"{child_name}={child_arg}")
+        return f"{snake_to_camel(elem.local_name)}({', '.join(args)})"
+    return "None"  # Fallback para elementos sem tipo definido (e.g., referências)
+
 # Função para processar um elemento
 def process_element(
     elem: XsdElement,
@@ -97,17 +143,14 @@ def process_element(
     # Extrair documentação de forma segura
     doc = ""
     if elem.annotation and elem.annotation.documentation:
-        # Handle multiple documentation elements
         if isinstance(elem.annotation.documentation, list):
-            # Concatenate all documentation texts
             doc_texts = [d.text for d in elem.annotation.documentation if d.text]
             doc = sanitize_string(" ".join(doc_texts))
         else:
-            # Single documentation element
             doc = sanitize_string(elem.annotation.documentation.text or "")
     classname = snake_to_camel(name)
     ns_prefix, tag = split_ns_name(elem.name, ns_map)
-    ns = ns_map.get(ns_prefix, target_ns)  # Usar namespace do elemento ou targetNamespace
+    ns = ns_map.get(ns_prefix, target_ns)
 
     if isinstance(ct, XsdSimpleType):
         # Tipo simples
@@ -122,7 +165,6 @@ def process_element(
             elif facet_name == "maxLength":
                 checks.append(f"        if len(str(value)) > {facet.value}: raise ValueError('{name} inválido')")
             elif facet_name == "pattern":
-                # Sanitizar o padrão regex para evitar problemas
                 pattern = sanitize_string(facet.pattern)
                 checks.append(f"        if not re.match(r'{pattern}', str(value)): raise ValueError('{name} inválido')")
         validation = "\n".join(checks) or "        pass"
@@ -192,11 +234,13 @@ def process_element(
 if obj.{child_name}:
     for item in obj.{child_name}:
         el.append({child_camel}XmlBuilder().build(item))""", "        "))
-                example_args.append(f"{child_name}=[{child_camel}.from_str('exemplo')]")
+                child_arg = generate_test_args(child, ns_map, target_ns)
+                example_args.append(f"{child_name}=[{child_arg}]")
             else:
                 cond = f"if obj.{child_name}: " if opt else ""
                 children.append(textwrap.indent(f"""{cond}el.append({child_camel}XmlBuilder().build(obj.{child_name}))""", "        "))
-                example_args.append(f"{child_name}={child_camel}.from_str('exemplo')")
+                child_arg = generate_test_args(child, ns_map, target_ns)
+                example_args.append(f"{child_name}={child_arg}")
 
         out["complex"].append(
             TEMPLATE_COMPLEX.format(
