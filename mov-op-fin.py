@@ -199,15 +199,6 @@ def process_element(
                 cast=cast
             )
         )
-        out["builders"].append(
-            TEMPLATE_BUILDER.format(
-                classname=classname,
-                tag=tag,
-                ns=ns,
-                attrib="",
-                children="        el.text = str(obj.value)"
-            )
-        )
         # Exemplo para teste
         example_value = "1" if typ == "int" else "example"
         if name.lower() == "cnpjdeclarante":
