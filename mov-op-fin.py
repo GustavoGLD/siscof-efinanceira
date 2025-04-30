@@ -37,7 +37,23 @@ class {classname}XmlBuilder(XmlBuilderInterface):
         return el
 """
 
-TEMPLATE_TEST = """
+TEMPLATE_TEST_SIMPLE = """
+    def test_{tag}(self):
+        # Criar um objeto {classname} de exemplo
+        obj = {classname}({example_args})
+        # No builder for simpleType; manual XML creation for testing
+        el = ET.Element('{{{ns}}}{tag}')
+        el.text = str(obj)
+        xml_str = ET.tostring(el, encoding='utf-8')
+        schema_doc = LET.parse('{schema_path}')
+        schema = LET.XMLSchema(schema_doc)
+        doc = LET.fromstring(xml_str)
+        ok = schema.validate(doc)
+        if not ok: print(schema.error_log)
+        self.assertTrue(ok)
+"""
+
+TEMPLATE_TEST_COMPLEX = """
     def test_{tag}(self):
         # Criar um objeto {classname} de exemplo
         obj = {classname}({example_args})
@@ -89,6 +105,7 @@ def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str)
         typ = TYPE_MAPPING.get(python_type, "str")
         # Valor padrão baseado no tipo
         example_value = "1" if typ == "int" else "example"
+        print(f"{elem.local_name}\n{tipo.local_name=}\n{elem.type.patterns}\n")
         # Ajustar com base no nome do elemento (e.g., cnpjDeclarante)
         if elem.local_name.lower() == "cnpjdeclarante":
             example_value = "12.345.678/0001-99"  # Formato CNPJ válido
@@ -152,7 +169,7 @@ def process_element(
     elem: XsdElement,
     ns_map: Dict[str, str],
     out: Dict[str, list],
-    schema_path: str,
+    subschema_path: str,
     processed: Set[str],
     target_ns: str
 ):
@@ -224,14 +241,15 @@ def process_element(
             example_value = "example"[:max_length]
             if len(example_value) < min_length:
                 example_value = example_value + "x" * (min_length - len(example_value))
-        out["tests"].append(
-            TEMPLATE_TEST.format(
-                tag=tag,
-                classname=classname,
-                example_args=f"{example_value!r}",
-                schema_path=schema_path
-            )
-        )
+        #out["tests"].append(
+        #    TEMPLATE_TEST_SIMPLE.format(
+        #        tag=tag,
+        #        classname=classname,
+        #        example_args=f"{example_value!r}",
+        #        schema_path=schema_path,
+        #        ns=ns
+        #    )
+        #)
     elif isinstance(ct, XsdComplexType):
         # Tipo complexo
         fields, assigns, children, example_args, attribs = [], [], [], [], []
@@ -247,28 +265,46 @@ def process_element(
         # Elementos filhos
         for child in ct.content.iter_elements():
             child_name = child.local_name
+            if not child_name:
+                continue
             child_camel = snake_to_camel(child_name)
             opt = child.min_occurs == 0
             is_list = child.max_occurs is None or child.max_occurs > 1
-            t = f"List[{child_camel}]" if is_list else child_camel
-            arg = f'{child_name}: "{'Optional['+t+']' if opt else t}"'
+            t = f'List["{child_camel}"]' if is_list else f'"{child_camel}"'
+            arg = f"{child_name}: {'Optional['+t+']' if opt else t}"
             fields.append(arg)
             assigns.append(f"        self.{child_name} = {child_name}")
             # Builder para filho
             child_ns_prefix, child_tag = split_ns_name(child.name, ns_map)
             child_ns = ns_map.get(child_ns_prefix, target_ns)
-            if is_list:
-                children.append(textwrap.indent(f"""\
+            if isinstance(child.type, XsdSimpleType):
+                # simpleType child: use XmlAdapter.append_child
+                if is_list:
+                    children.append(textwrap.indent(f"""\
+if obj.{child_name}:
+    for item in obj.{child_name}:
+        XmlAdapter.append_child(el, '{{{child_ns}}}{child_tag}', str(item))""", "        "))
+                    child.arg = generate_test_args(child, ns_map, target_ns)
+                    example_args.append(f"{child_name}=[{child.arg}]")
+                else:
+                    cond = f"if obj.{child_name}: " if opt else ""
+                    children.append(textwrap.indent(f"""{cond}XmlAdapter.append_child(el, '{{{child_ns}}}{child_tag}', str(obj.{child_name}))""", "        "))
+                    child.arg = generate_test_args(child, ns_map, target_ns)
+                    example_args.append(f"{child_name}={child.arg}")
+            elif isinstance(child.type, XsdComplexType):
+                # complexType child: use XmlBuilder
+                if is_list:
+                    children.append(textwrap.indent(f"""\
 if obj.{child_name}:
     for item in obj.{child_name}:
         el.append({child_camel}XmlBuilder().build(item))""", "        "))
-                child_arg = generate_test_args(child, ns_map, target_ns)
-                example_args.append(f"{child_name}=[{child_arg}]")
-            else:
-                cond = f"if obj.{child_name}: " if opt else ""
-                children.append(textwrap.indent(f"""{cond}el.append({child_camel}XmlBuilder().build(obj.{child_name}))""", "        "))
-                child_arg = generate_test_args(child, ns_map, target_ns)
-                example_args.append(f"{child_name}={child_arg}")
+                    child.arg = generate_test_args(child, ns_map, target_ns)
+                    example_args.append(f"{child_name}=[{child.arg}]")
+                else:
+                    cond = f"if obj.{child_name}: " if opt else ""
+                    children.append(textwrap.indent(f"""{cond}el.append({child_camel}XmlBuilder().build(obj.{child_name}))""", "        "))
+                    child.arg = generate_test_args(child, ns_map, target_ns)
+                    example_args.append(f"{child_name}={child.arg}")
 
         out["complex"].append(
             TEMPLATE_COMPLEX.format(
@@ -288,18 +324,18 @@ if obj.{child_name}:
             )
         )
         out["tests"].append(
-            TEMPLATE_TEST.format(
+            TEMPLATE_TEST_COMPLEX.format(
                 tag=tag,
                 classname=classname,
                 example_args=", ".join(example_args),
-                schema_path=schema_path
+                schema_path=f'{subschema_path}/{elem.local_name}.xsd'
             )
         )
 
 # Função principal de geração
 def gen():
-    schema_path = "schemas/evtMovOpFin-v1_2_1.xsd"
-    schema = XMLSchema(schema_path)
+    subschema_path = "../schemas/subschemas"
+    schema = XMLSchema("schemas/evtMovOpFin-v1_2_1.xsd")
     out = {"simple": [], "complex": [], "builders": [], "tests": []}
     ns_map = schema.namespaces
     target_ns = schema.target_namespace
@@ -309,7 +345,7 @@ def gen():
     for sch in schema.elements.values():
         for elem in sch.iter_components():
             if isinstance(elem, XsdElement):
-                process_element(elem, ns_map, out, schema_path, processed, target_ns)
+                process_element(elem, ns_map, out, subschema_path, processed, target_ns)
 
     # Salvar arquivos com codificação UTF-8 explícita
     base = Path("generated")
@@ -331,11 +367,11 @@ def gen():
     )
     (base/"test_builders.py").write_text(
         "import unittest\nimport xml.etree.ElementTree as ET\nfrom lxml import etree as LET\nfrom xml.dom import minidom\nfrom .types import *\nfrom .builders import *\n\nclass TestXmlValidation(unittest.TestCase):\n" +
-        "    def validar_xml(self,obj,builder,schema_path):\n" +
+        "    def validar_xml(self,obj,builder,subschema_path):\n" +
         "        xml_el=builder.build(obj)\n" +
         "        xml_str=ET.tostring(xml_el,encoding='utf-8')\n" +
         "        print(minidom.parseString(xml_str).toprettyxml(indent='  '))\n" +
-        "        schema_doc = LET.parse(schema_path)\n" +
+        "        schema_doc = LET.parse(subschema_path)\n" +
         "        schema = LET.XMLSchema(schema_doc)\n" +
         "        doc = LET.fromstring(xml_str)\n" +
         "        ok = schema.validate(doc)\n" +
