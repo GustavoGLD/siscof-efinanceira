@@ -105,35 +105,78 @@ def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str)
         typ = TYPE_MAPPING.get(python_type, "str")
         # Valor padrão baseado no tipo
         example_value = "1" if typ == "int" else "example"
-        print(f"{elem.local_name}\n{tipo.local_name=}\n{elem.type.patterns}\n")
+
         # Ajustar com base no nome do elemento (e.g., cnpjDeclarante)
-        if elem.local_name.lower() == "cnpjdeclarante":
-            example_value = "12.345.678/0001-99"  # Formato CNPJ válido
-        elif tipo.name == "xs:date":
+        if "cnpj" in elem.local_name.lower():
+            example_value = "12345678000195"  # Formato CNPJ válido
+        elif "date" in tipo.name:
             example_value = "2023-01-01"  # Formato de data ISO
-        # Ajustar com base em facets
+        elif "base64Binary" in tipo.name:
+            example_value = "SGVsbG8="  # Exemplo de string base64 ("Hello")
+
+        # Ajustar com base em facets (patterns)
         if elem.type.facets.get("pattern"):
             pattern = elem.type.facets["pattern"].pattern
-            if pattern == "[1|2|3]":
-                example_value = "1"
-            elif pattern == "[1|2]":
-                example_value = "1"
-            elif pattern == "[0-9]{1,18}[-][0-9]{2}[-][0-9]{3}[-][0-9]{4}[-][0-9]{1,18}":
-                example_value = "123-12-123-1234-123"
-            elif pattern == "[0-9]{14}":  # Possível CNPJ sem formatação
-                example_value = "12345678000199"
+            # Mapear padrões para valores de exemplo
+            pattern_map = {
+                "[1|2|3]": "1",
+                "[1|2]": "1",
+                "[1;3;5]": "1",
+                "[1]": "1",
+                "[0-9]{1,18}[-][0-9]{2}[-][0-9]{3}[-][0-9]{4}[-][0-9]{1,18}": "123-12-123-1234-123",
+                "[0-9]{14}": "12345678000199",
+                "[0-9]{1,21}": "123456789012345678901",
+                "[0-9]{1,2}": "12",
+                "20([0-9][0-9])(0[1-9]|1[0-3])": "202301",
+                "[0-9]{1,19}[,][0-9]{2}": "12345678901234567,89",
+                "[-]{0,1}[0-9]{1,19}[,][0-9]{2}": "-12345678901234567,89",
+            }
+            example_value = pattern_map.get(pattern, example_value)
+
+        # Ajustar com base em enumerações
         elif elem.type.facets.get("enumeration"):
-            # Usar o primeiro valor da enumeração, se disponível
             enum_values = [e.value for e in elem.type.facets["enumeration"].enumeration]
             example_value = enum_values[0] if enum_values else example_value
+
+        # Ajustar com base em minLength/maxLength
         elif elem.type.facets.get("minLength") or elem.type.facets.get("maxLength"):
-            # Ajustar string para atender minLength/maxLength
             min_length = elem.type.facets.get("minLength", 0).value if elem.type.facets.get("minLength") else 0
             max_length = elem.type.facets.get("maxLength", 100).value if elem.type.facets.get("maxLength") else 100
             example_value = "example"[:max_length]
             if len(example_value) < min_length:
                 example_value = example_value + "x" * (min_length - len(example_value))
+
+        # Ajustar com base no tipo (decimal, string, etc.)
+        if tipo.local_name == "decimal" and example_value == "example":
+            example_value = "1"  # Default para decimal sem padrão específico
+        elif tipo.local_name == "string" and example_value == "example":
+            # Usar nome do elemento para valores mais significativos
+            name_lower = elem.local_name.lower()
+            if "nome" in name_lower:
+                example_value = "Teste Nome"
+            elif "pais" in name_lower:
+                example_value = "BR"
+            elif "endereco" in name_lower or "logradouro" in name_lower:
+                example_value = "Rua Exemplo"
+            elif "municipio" in name_lower:
+                example_value = "Sao Paulo"
+            elif "bairro" in name_lower:
+                example_value = "Centro"
+            elif "cep" in name_lower:
+                example_value = "12345-678"
+            elif "uf" in name_lower:
+                example_value = "SP"
+            elif "numero" in name_lower:
+                example_value = "123"
+            elif "complemento" in name_lower:
+                example_value = "Apto 456"
+            elif "andar" in name_lower:
+                example_value = "5"
+            elif "caixa" in name_lower:
+                example_value = "12345"
+
         return f"{snake_to_camel(elem.local_name)}.from_str({example_value!r})"
+
     elif isinstance(elem.type, XsdComplexType):
         # Para complexType, construir instância com argumentos recursivos
         args = []
@@ -162,6 +205,7 @@ def generate_test_args(elem: XsdElement, ns_map: Dict[str, str], target_ns: str)
         if not args:
             return f"{snake_to_camel(elem.local_name)}()"
         return f"{snake_to_camel(elem.local_name)}({', '.join(args)})"
+
     return "None"  # Fallback para elementos sem tipo definido (e.g., referências)
 
 # Função para processar um elemento
@@ -334,7 +378,7 @@ if obj.{child_name}:
 
 # Função principal de geração
 def gen():
-    subschema_path = "../schemas/subschemas"
+    subschema_path = "../schemas/subschemas/mov-op-fin"
     schema = XMLSchema("schemas/evtMovOpFin-v1_2_1.xsd")
     out = {"simple": [], "complex": [], "builders": [], "tests": []}
     ns_map = schema.namespaces
