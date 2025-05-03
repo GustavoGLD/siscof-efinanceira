@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1">
+  <xs:element name="Cambio">
+    <xs:annotation>
+      <xs:documentation>Informações sobre operações de câmbio</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="MedJudic" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Identificação de medidas judiciais</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NumProcJud">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Vara">
+                <xs:annotation>
+                  <xs:documentation>Vara de tramitação</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:unsignedInt"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SecJud">
+                <xs:annotation>
+                  <xs:documentation>Seção judiciária</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:unsignedInt"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SubSecJud">
+                <xs:annotation>
+                  <xs:documentation>Subseção judiciária</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="dtConcessao">
+                <xs:annotation>
+                  <xs:documentation>Data da concessão</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:date"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="dtCassacao" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Data da cassação</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:date"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="totCompras">
+          <xs:annotation>
+            <xs:documentation>Valor total de compras</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="totVendas">
+          <xs:annotation>
+            <xs:documentation>Valor total de vendas</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="totTransferencias">
+          <xs:annotation>
+            <xs:documentation>Valor total de transferências</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

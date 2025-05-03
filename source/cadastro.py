@@ -1050,7 +1050,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = EnderecoXmlBuilder()
-        self.validar_xml(endereco, builder, "schemas/subschemas/cadastro/Endereco.xsd")
+        self.validar_xml(endereco, builder, "../schemas/subschemas/cadastro/Endereco.xsd")
 
     def test_EnderecoEstrutura(self):
         # Teste de criação de um objeto EnderecoEstrutura
@@ -1070,7 +1070,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = EnderecoOutrosEnderecoEstruturaXmlBuilder()
-        self.validar_xml(endereco_estrutura, builder, "schemas/subschemas/cadastro/EnderecoEstrutura.xsd")
+        self.validar_xml(endereco_estrutura, builder, "../schemas/subschemas/cadastro/EnderecoEstrutura.xsd")
 
     def test_EnderecoOutros(self):
         # Teste de criação de um objeto EnderecoOutros
@@ -1095,7 +1095,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = EnderecoOutros1XmlBuilder()
-        self.validar_xml(endereco_outros, builder, "schemas/subschemas/cadastro/EnderecoOutros.xsd")
+        self.validar_xml(endereco_outros, builder, "../schemas/subschemas/cadastro/EnderecoOutros.xsd")
 
     def test_ideDeclarante(self):
         ide_declarante = IdeDeclarante(
@@ -1103,7 +1103,7 @@ class TestXmlValidation(unittest.TestCase):
         )
 
         builder = IdeDeclaranteXmlBuilder()
-        self.validar_xml(ide_declarante, builder, "schemas/subschemas/cadastro/ideDeclarante.xsd")
+        self.validar_xml(ide_declarante, builder, "../schemas/subschemas/cadastro/ideDeclarante.xsd")
 
     def test_ideEvento(self):
         ide_evento = IdeEvento(
@@ -1114,14 +1114,14 @@ class TestXmlValidation(unittest.TestCase):
             nr_recibo=NumeroRecibo.from_str("12345-12-345-6789-67890")
         )
         builder = IdeEventoXmlBuilder()
-        self.validar_xml(ide_evento, builder, "schemas/subschemas/cadastro/ideEvento.xsd")
+        self.validar_xml(ide_evento, builder, "../schemas/subschemas/cadastro/ideEvento.xsd")
 
     def test_infoTpInstPgto1(self):
         info_tp_inst_pgto1 = InfoTpInstPgto1(
             tp_inst_pgto=TpInstPgto("1")
         )
         builder = InfoTpInstPgto1XmlBuilder()
-        self.validar_xml(info_tp_inst_pgto1, builder, "schemas/subschemas/cadastro/infoTpInstPgto.xsd")
+        self.validar_xml(info_tp_inst_pgto1, builder, "../schemas/subschemas/cadastro/infoTpInstPgto.xsd")
 
     def test_InfoCadastro(self):
         info_cadastro = InfoCadastro(
@@ -1134,14 +1134,14 @@ class TestXmlValidation(unittest.TestCase):
             pais_resid1=PaisResid1(PaisResidSigla("BR")),
         )
         builder = InfoCadastroXmlBuilder()
-        self.validar_xml(info_cadastro, builder, "schemas/subschemas/cadastro/infoCadastro.xsd")
+        self.validar_xml(info_cadastro, builder, "../schemas/subschemas/cadastro/infoCadastro.xsd")
 
     def test_paisResid(self):
         pais_resid1 = PaisResid1(
             pais_resid_pais=PaisResidSigla.from_str("BR")
         )
         builder = PaisResid1XmlBuilder()
-        self.validar_xml(pais_resid1, builder, "schemas/subschemas/cadastro/paisResid.xsd")
+        self.validar_xml(pais_resid1, builder, "../schemas/subschemas/cadastro/paisResid.xsd")
 
     def test_EvtCadDeclarante(self):
         evt_cad_declarante = EvtCadDeclarante(
@@ -1166,7 +1166,7 @@ class TestXmlValidation(unittest.TestCase):
             ),
         )
         builder = EvtCadDeclaranteXmlBuilder()
-        self.validar_xml(evt_cad_declarante, builder, "schemas/subschemas/cadastro/evtCadDeclarante.xsd")
+        self.validar_xml(evt_cad_declarante, builder, "../schemas/subschemas/cadastro/evtCadDeclarante.xsd")
 
     def test_NIF1(self):
         nif1 = NIF1(
@@ -1175,4 +1175,4 @@ class TestXmlValidation(unittest.TestCase):
             tp_nif=TpNIF.from_str("1")
         )
         builder = NIF1XmlBuilder()
-        self.validar_xml(nif1, builder, "schemas/subschemas/cadastro/NIF.xsd")
+        self.validar_xml(nif1, builder, "../schemas/subschemas/cadastro/NIF.xsd")

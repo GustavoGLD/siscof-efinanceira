@@ -1,0 +1,51 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1">
+  <xs:element name="BalancoConta">
+    <xs:annotation>
+      <xs:documentation>Informações de balanço da conta</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="totCreditos">
+          <xs:annotation>
+            <xs:documentation>Total de créditos</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="totDebitos">
+          <xs:annotation>
+            <xs:documentation>Total de débitos</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="totCreditosMesmaTitularidade">
+          <xs:annotation>
+            <xs:documentation>Total de créditos do mesmo titular</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="totDebitosMesmaTitularidade">
+          <xs:annotation>
+            <xs:documentation>Total de débitos do mesmo titular</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="vlrUltDia" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Saldo no último dia do mês</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

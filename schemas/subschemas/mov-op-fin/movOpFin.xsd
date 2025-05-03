@@ -1,0 +1,400 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1">
+  <xs:element name="movOpFin">
+    <xs:annotation>
+      <xs:documentation>Operações financeiras</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Conta" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Identificação da conta</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MedJudic" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>Identificação de medidas judiciais</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="NumProcJud">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Vara">
+                      <xs:annotation>
+                        <xs:documentation>Vara de tramitação</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="SecJud">
+                      <xs:annotation>
+                        <xs:documentation>Seção judiciária</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="SubSecJud">
+                      <xs:annotation>
+                        <xs:documentation>Subseção judiciária</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="dtConcessao">
+                      <xs:annotation>
+                        <xs:documentation>Data da concessão</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:date"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="dtCassacao" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Data da cassação</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:date"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="infoConta" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Informações da conta</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Reportavel" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>Identificação do(s) país(es) para o(s) qual(is) a conta deve ser reportada</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Pais">
+                            <xs:annotation>
+                              <xs:documentation>País</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="tpConta">
+                      <xs:annotation>
+                        <xs:documentation>Tipo de conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="subTpConta">
+                      <xs:annotation>
+                        <xs:documentation>Subtipo de conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="tpNumConta">
+                      <xs:annotation>
+                        <xs:documentation>Tipo do número da conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="numConta">
+                      <xs:annotation>
+                        <xs:documentation>Número da conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="tpRelacaoDeclarado">
+                      <xs:annotation>
+                        <xs:documentation>Tipo de relação do declarado</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="moeda" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Moeda na qual os valores de movimentação da conta serão informados</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Intermediario" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Identificação do intermediário</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="GIIN" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>GIIN (Global Intermediary Identification Number)</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="tpNI" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Tipo de NI</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:unsignedByte"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="NIIntermediario" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>NI</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="NoTitulares" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Número de titulares da conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="dtEncerramentoConta" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Data de encerramento da conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:date"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IndInatividade" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Indicador de inatividade da conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedByte"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IndNDoc" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Indicador de conta não documentada</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedByte"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Fundo" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Identificação do fundo</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="GIIN" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>GIIN referente ao fundo de investimentos</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="CNPJ">
+                            <xs:annotation>
+                              <xs:documentation>CNPJ referente ao fundo de investimentos</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BalancoConta">
+                      <xs:annotation>
+                        <xs:documentation>Informações de balanço da conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="totCreditos">
+                            <xs:annotation>
+                              <xs:documentation>Total de créditos</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="totDebitos">
+                            <xs:annotation>
+                              <xs:documentation>Total de débitos</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="totCreditosMesmaTitularidade">
+                            <xs:annotation>
+                              <xs:documentation>Total de créditos do mesmo titular</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="totDebitosMesmaTitularidade">
+                            <xs:annotation>
+                              <xs:documentation>Total de débitos do mesmo titular</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="vlrUltDia" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Saldo no último dia do mês</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PgtosAcum" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>Informações de pagamentos referentes à conta</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="tpPgto" maxOccurs="unbounded">
+                            <xs:annotation>
+                              <xs:documentation>Tipo de pagamento</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="totPgtosAcum">
+                            <xs:annotation>
+                              <xs:documentation>Total acumulado de pagamentos realizados no ano</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Cambio" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Informações sobre operações de câmbio</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MedJudic" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                  <xs:documentation>Identificação de medidas judiciais</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="NumProcJud">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Vara">
+                      <xs:annotation>
+                        <xs:documentation>Vara de tramitação</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="SecJud">
+                      <xs:annotation>
+                        <xs:documentation>Seção judiciária</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="SubSecJud">
+                      <xs:annotation>
+                        <xs:documentation>Subseção judiciária</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="dtConcessao">
+                      <xs:annotation>
+                        <xs:documentation>Data da concessão</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:date"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="dtCassacao" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Data da cassação</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:date"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="totCompras">
+                <xs:annotation>
+                  <xs:documentation>Valor total de compras</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="totVendas">
+                <xs:annotation>
+                  <xs:documentation>Valor total de vendas</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="totTransferencias">
+                <xs:annotation>
+                  <xs:documentation>Valor total de transferências</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

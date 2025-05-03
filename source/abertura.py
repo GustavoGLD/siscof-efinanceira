@@ -829,7 +829,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/telefone.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/telefone.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
@@ -859,7 +859,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/Endereço.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/Endereço.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
@@ -900,7 +900,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/RespeFin.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/RespeFin.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
@@ -941,7 +941,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/ResponsavelRMF.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/ResponsavelRMF.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
@@ -972,7 +972,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/RepresLegal.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/RepresLegal.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
@@ -1044,7 +1044,7 @@ class TestXmlValidation(unittest.TestCase):
         xml_str = ET.tostring(xml_element, encoding="utf-8")
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/AberturaMovOpFin.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/AberturaMovOpFin.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
         # Valida XML
@@ -1067,7 +1067,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/infoAbertura.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/infoAbertura.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
@@ -1091,7 +1091,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/ideDeclarante.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/ideDeclarante.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
@@ -1181,7 +1181,7 @@ class TestXmlValidation(unittest.TestCase):
         print(minidom.parseString(xml_str).toprettyxml(indent="  "))
 
         # Carrega o XSD
-        with open("schemas/subschemas/abertura/evtAberturaeFinanceira.xsd", "rb") as f:
+        with open("../schemas/subschemas/abertura/evtAberturaeFinanceira.xsd", "rb") as f:
             schema_doc = LET.parse(f)
         schema = LET.XMLSchema(schema_doc)
 
