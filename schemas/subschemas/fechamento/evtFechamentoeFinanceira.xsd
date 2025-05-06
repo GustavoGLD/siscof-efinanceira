@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="evtFechamentoeFinanceira">
+    <xs:annotation>
+      <xs:documentation>Evento de Fechamento da eFinanceira</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ideEvento">
+          <xs:annotation>
+            <xs:documentation>Informações de identificação do evento</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="indRetificacao">
+                <xs:simpleType>
+                  <xs:restriction base="xs:unsignedInt"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="nrRecibo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="tpAmb">
+                <xs:simpleType>
+                  <xs:restriction base="xs:unsignedInt"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="aplicEmi">
+                <xs:simpleType>
+                  <xs:restriction base="xs:unsignedInt"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="verAplic">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ideDeclarante">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cnpjDeclarante">
+                <xs:annotation>
+                  <xs:documentation>CNPJ da Entidade Declarante</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="infoFechamento">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dtInicio">
+                <xs:annotation>
+                  <xs:documentation>Data Inicial</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:date"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="dtFim">
+                <xs:annotation>
+                  <xs:documentation>Data Final</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:date"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="sitEspecial">
+                <xs:annotation>
+                  <xs:documentation>
+                          Indicador de Situação Especial
+                          0 = Não se aplica
+                          1 = Extinção
+                          2 = Fusão
+                          3 = Incorporação/Incorporada
+                          5 = Cisão Total
+                        </xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:unsignedInt"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FechamentoPP" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FechamentoMes" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="anoMesCaixa">
+                      <xs:annotation>
+                        <xs:documentation>Ano e Mês Caixa</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="quantArqTrans">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedLong"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FechamentoMovOpFin" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FechamentoMes" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="anoMesCaixa">
+                      <xs:annotation>
+                        <xs:documentation>Ano e Mês Caixa</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="quantArqTrans">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedLong"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="EntDecExterior" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="ContasAReportar">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedByte"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="EntPatDecExterior" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="GIIN">
+                      <xs:annotation>
+                        <xs:documentation>GIIN</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="CNPJ">
+                      <xs:annotation>
+                        <xs:documentation>CNPJ</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ContasAReportar" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>Não existem contas a reportar por parte da entidade no conceito de declarante no FATCA</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedByte"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="inCadPatrocinadoEncerrado" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>O fundo foi encerrado e não serão enviadas contas para este fundo</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedByte"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="inGIINEncerrado" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>O GIIN foi encerrado no IRS</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedByte"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FechamentoMovOpFinAnual" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FechamentoAno">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="anoCaixa">
+                      <xs:annotation>
+                        <xs:documentation>Ano Caixa</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="quantArqTrans">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedLong"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="id" use="required">
+        <xs:annotation>
+          <xs:documentation>Identificador que representa unicamente o evento no sistema para a mesma empresa.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="EntPatDecExterior">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="GIIN">
+          <xs:annotation>
+            <xs:documentation>GIIN</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="CNPJ">
+          <xs:annotation>
+            <xs:documentation>CNPJ</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="ContasAReportar" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Não existem contas a reportar por parte da entidade no conceito de declarante no FATCA</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedByte"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="inCadPatrocinadoEncerrado" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>O fundo foi encerrado e não serão enviadas contas para este fundo</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedByte"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="inGIINEncerrado" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>O GIIN foi encerrado no IRS</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedByte"/>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
