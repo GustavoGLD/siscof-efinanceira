@@ -18,7 +18,7 @@ def create_xsd_element(tag, nsmap=None, **attribs):
     if nsmap is None:
         nsmap = {
             'xs': 'http://www.w3.org/2001/XMLSchema',
-            None: 'http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1',
+            # None: 'http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1',
             'ds': 'http://www.w3.org/2000/09/xmldsig#'
         }
     qname = ET.QName('http://www.w3.org/2001/XMLSchema', tag)
@@ -89,7 +89,7 @@ def convert_type_to_etree(type_obj, parent, nsmap):
 
 # Função principal para gerar XSDs
 def generate_xsd_files():
-    schema_path = "schemas/evtMovOpFin-v1_2_1.xsd"
+    schema_path = "schemas/evtMovOpFinAnual-v1_2_2.xsd"
     schema = xmlschema.XMLSchema(schema_path)
     output_dir = Path("generated_xsd")
     output_dir.mkdir(exist_ok=True)
@@ -108,13 +108,13 @@ def generate_xsd_files():
                 # Criar um novo documento XSD
                 nsmap = {
                     'xs': 'http://www.w3.org/2001/XMLSchema',
-                    None: 'http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1',
+                    #None: 'http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1',
                     'ds': 'http://www.w3.org/2000/09/xmldsig#'
                 }
                 schema_elem = create_xsd_element('schema', nsmap,
                     elementFormDefault='qualified',
                     attributeFormDefault='unqualified',
-                    targetNamespace='http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1'
+                    #targetNamespace='http://www.eFinanceira.gov.br/schemas/evtMovOpFin/v1_2_1'
                 )
 
                 # Adicionar import para xmldsig se necessário

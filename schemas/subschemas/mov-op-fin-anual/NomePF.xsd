@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="NomePF">
+    <xs:annotation>
+      <xs:documentation>Nome de Pessoa Física</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="tpNome" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Tipo do nome</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="PrecTitulo" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Informação que precede ao título do nome (ex: “vossa excelência”, “espólio de”)</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Titulo" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Título do nome (ex: sr., sra.)</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="PrimeiroNome">
+          <xs:annotation>
+            <xs:documentation>Informação do primeiro nome</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Tipo" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Tipo do primeiro nome (ex: nome próprio, nome de batismo)</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Nome">
+                <xs:annotation>
+                  <xs:documentation>Primeiro nome</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="MeioNome" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Informação do nome do meio</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Tipo" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Tipo do nome do meio (ex: nome de solteiro, nome de família)</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Nome">
+                <xs:annotation>
+                  <xs:documentation>Nome do meio</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PrefixoNome" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Informação de prefixo associado a alguma parte do nome (ex: “de”, “da”, “dos”)</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Tipo" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Referência à parte do nome associada ao prefixo (ex: primeiro, meio, último nome)</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Nome">
+                <xs:annotation>
+                  <xs:documentation>Prefixo associado a alguma parte do nome</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="UltimoNome">
+          <xs:annotation>
+            <xs:documentation>Informação do último nome</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Tipo" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>Tipo do último nome (ex: sobrenome, nome de família)</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Nome">
+                <xs:annotation>
+                  <xs:documentation>Último nome</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="IdGeracao" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Parte do nome indicativa de geração (ex: junior, neto, III)</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Sufixo" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>Siglas credenciais do nome (ex: PhD, VQ, QC)</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="GenSufixo" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Indicativo associado ao nome (ex: “falecido”, “aposentado”)</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="PrefixoNome">
+    <xs:annotation>
+      <xs:documentation>Informação de prefixo associado a alguma parte do nome (ex: “de”, “da”, “dos”)</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Tipo" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>Referência à parte do nome associada ao prefixo (ex: primeiro, meio, último nome)</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Nome">
+          <xs:annotation>
+            <xs:documentation>Prefixo associado a alguma parte do nome</xs:documentation>
+          </xs:annotation>
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

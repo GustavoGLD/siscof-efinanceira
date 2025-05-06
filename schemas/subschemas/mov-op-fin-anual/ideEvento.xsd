@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="ideEvento">
+    <xs:annotation>
+      <xs:documentation>Identificação do evento</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="indRetificacao">
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedInt"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="nrRecibo" minOccurs="0">
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="tpAmb">
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedInt"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="aplicEmi">
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedInt"/>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="verAplic">
+          <xs:simpleType>
+            <xs:restriction base="xs:string"/>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
