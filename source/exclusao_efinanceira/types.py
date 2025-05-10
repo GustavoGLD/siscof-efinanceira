@@ -74,25 +74,18 @@ class Nrreciboevento:
 
 class Efinanceira:
     """"""
-    def __init__(self, evtExclusao: "Evtexclusao", Signature: "Signature"):
-        self.evtExclusao = evtExclusao
+    def __init__(self, evtExclusaoeFinanceira: "Evtexclusaoefinanceira", Signature: "Signature"):
+        self.evtExclusaoeFinanceira = evtExclusaoeFinanceira
         self.Signature = Signature
 
 
-class Evtexclusao:
-    """
-    ATENÇÃO!!! ESTE EVENTO SÓ DEVE SER UTILIZADO SE HOUVER A
-    INTENÇÃO DE EXCLUIR TODA UMA E-FINANCEIRA “EM ANDAMENTO” DE
-    DETERMINADO PERÍODO!!! TODA A E-FINANCEIRA E SEUS RESPECTIVOS
-    EVENTOS DE MOVIMENTO SERÃO EXCLUÍDOS!!! PARA A EXCLUSÃO
-    PONTUAL, DE DETERMINADOS EVENTOS INDIVIDUALMENTE, UTILIZE O
-    EVENTO DE EXCLUSÃO, DESCRITO NO ITEM 3.4 DESTE MANUAL!!!
-    """
-    def __init__(self, id: str, ideEvento: "Ideevento", ideDeclarante: "Idedeclarante", infoExclusao: "Infoexclusao"):
+class Evtexclusaoefinanceira:
+    """Evento de Exclusao"""
+    def __init__(self, id: str, ideEvento: "Ideevento", ideDeclarante: "Idedeclarante", infoExclusaoeFinanceira: "Infoexclusaoefinanceira"):
         self.id = id
         self.ideEvento = ideEvento
         self.ideDeclarante = ideDeclarante
-        self.infoExclusao = infoExclusao
+        self.infoExclusaoeFinanceira = infoExclusaoeFinanceira
 
 
 class Ideevento:
@@ -109,7 +102,7 @@ class Idedeclarante:
         self.cnpjDeclarante = cnpjDeclarante
 
 
-class Infoexclusao:
+class Infoexclusaoefinanceira:
     """"""
     def __init__(self, nrReciboEvento: "Nrreciboevento"):
         self.nrReciboEvento = nrReciboEvento

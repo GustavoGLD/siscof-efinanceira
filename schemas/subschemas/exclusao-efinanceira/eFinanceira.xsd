@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="eFinanceira">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="evtExclusaoeFinanceira">
+          <xs:annotation>
+            <xs:documentation>Evento de Exclusao</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ideEvento">
+                <xs:annotation>
+                  <xs:documentation>Informações de identificação do evento</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="tpAmb">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="aplicEmi">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="verAplic">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ideDeclarante">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cnpjDeclarante">
+                      <xs:annotation>
+                        <xs:documentation>CNPJ da Entidade Declarante</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="infoExclusaoeFinanceira">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="nrReciboEvento">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" use="required">
+              <xs:annotation>
+                <xs:documentation>Identificador que representa unicamente o evento no sistema para a mesma empresa e mesmo tipo.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Signature" type="{http://www.w3.org/2000/09/xmldsig#}SignatureType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

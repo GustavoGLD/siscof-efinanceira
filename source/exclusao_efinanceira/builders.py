@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-from source.exclusao.types import *
+from .types import *
 from typing import Dict, Optional
 from abc import ABC, abstractmethod
 
@@ -21,21 +21,13 @@ class XmlAdapter:
         return ch
 
 
-class EvtexclusaoXmlBuilder(XmlBuilderInterface):
-    """
-    ATENÇÃO!!! ESTE EVENTO SÓ DEVE SER UTILIZADO SE HOUVER A
-    INTENÇÃO DE EXCLUIR TODA UMA E-FINANCEIRA “EM ANDAMENTO” DE
-    DETERMINADO PERÍODO!!! TODA A E-FINANCEIRA E SEUS RESPECTIVOS
-    EVENTOS DE MOVIMENTO SERÃO EXCLUÍDOS!!! PARA A EXCLUSÃO
-    PONTUAL, DE DETERMINADOS EVENTOS INDIVIDUALMENTE, UTILIZE O
-    EVENTO DE EXCLUSÃO, DESCRITO NO ITEM 3.4 DESTE MANUAL!!!
-    """
-    def build(self, obj: Evtexclusao) -> ET.Element:
-        el = XmlAdapter.create_element("evtExclusao")
+class EvtexclusaoefinanceiraXmlBuilder(XmlBuilderInterface):
+    def build(self, obj: Evtexclusaoefinanceira) -> ET.Element:
+        el = XmlAdapter.create_element("evtExclusaoeFinanceira")
         el.set('id', str(obj.id))
         el.append(IdeeventoXmlBuilder().build(obj.ideEvento))
         el.append(IdedeclaranteXmlBuilder().build(obj.ideDeclarante))
-        el.append(InfoexclusaoXmlBuilder().build(obj.infoExclusao))
+        el.append(InfoexclusaoefinanceiraXmlBuilder().build(obj.infoExclusaoeFinanceira))
         return el
 
 
@@ -55,8 +47,8 @@ class IdedeclaranteXmlBuilder(XmlBuilderInterface):
         return el
 
 
-class InfoexclusaoXmlBuilder(XmlBuilderInterface):
-    def build(self, obj: Infoexclusao) -> ET.Element:
-        el = XmlAdapter.create_element("infoExclusao")
+class InfoexclusaoefinanceiraXmlBuilder(XmlBuilderInterface):
+    def build(self, obj: Infoexclusaoefinanceira) -> ET.Element:
+        el = XmlAdapter.create_element("infoExclusaoeFinanceira")
         XmlAdapter.append_child(el, 'nrReciboEvento', str(obj.nrReciboEvento))
         return el
