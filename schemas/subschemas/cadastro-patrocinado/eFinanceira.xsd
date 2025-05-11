@@ -1,0 +1,290 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="eFinanceira">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="evtCadPatrocinado">
+          <xs:annotation>
+            <xs:documentation>Evento de Cadastro do Patrocinado</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ideEvento">
+                <xs:annotation>
+                  <xs:documentation>Informações de identificação do evento</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="indRetificacao">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="nrRecibo" minOccurs="0">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="tpAmb">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="aplicEmi">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:unsignedInt"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="verAplic">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ideDeclarante">
+                <xs:annotation>
+                  <xs:documentation>Informações de identificação da Entidade Declarante</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cnpjDeclarante">
+                      <xs:annotation>
+                        <xs:documentation>CNPJ da Entidade Declarante</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="GIIN" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>GIIN (Global Intermediary Identification Number) de Patrocinador (formato: XXXXXX.XXXXX.SP.XXX)</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="CategoriaPatrocinador" minOccurs="0">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="infoPatrocinado">
+                <xs:annotation>
+                  <xs:documentation>Informações da Entidade Patrocinada</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="GIIN" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>GIIN (Global Intermediary Identification Number) de Patrocinado</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="CNPJ">
+                      <xs:annotation>
+                        <xs:documentation>CNPJ da Entidade Patrocinada</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="NIF" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>Informações de Identificação Fiscal no Exterior da Entidade Patrocinada</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="NumeroNIF">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="PaisEmissao">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="tpNIF" minOccurs="0">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="nomePatrocinado">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="tpNome" minOccurs="0">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="endereco">
+                      <xs:annotation>
+                        <xs:documentation>Endereço da Entidade Patrocinada</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="enderecoLivre">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="CEP">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="municipio">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="pais">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="tpEndereco" minOccurs="0">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="EnderecoOutros" minOccurs="0" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>Demais endereços</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="tpEndereco" minOccurs="0">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="EnderecoLivre" minOccurs="0">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                          <xs:element name="EnderecoEstrutura" minOccurs="0">
+                            <xs:annotation>
+                              <xs:documentation>Endereço na forma estruturada</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="EnderecoLivre" minOccurs="0">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Endereco" minOccurs="0">
+                                  <xs:annotation>
+                                    <xs:documentation>Dados do endereço na forma estruturada</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Logradouro" minOccurs="0">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="Numero" minOccurs="0">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="Complemento" minOccurs="0">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="Andar" minOccurs="0">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="Bairro" minOccurs="0">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                      <xs:element name="CaixaPostal" minOccurs="0">
+                                        <xs:simpleType>
+                                          <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="CEP">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Municipio">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                  </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="UF">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                  </xs:simpleType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="Pais">
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="paisResid" maxOccurs="unbounded">
+                      <xs:annotation>
+                        <xs:documentation>País de residência da Entidade Patrocinada</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="Pais">
+                            <xs:annotation>
+                              <xs:documentation>País</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" use="required">
+              <xs:annotation>
+                <xs:documentation>Identificador do evento</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Signature" type="{http://www.w3.org/2000/09/xmldsig#}SignatureType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
