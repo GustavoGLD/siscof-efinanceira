@@ -444,7 +444,7 @@ class Idedeclarante:
 
 class Infopatrocinado:
     """Informacoes da Entidade Patrocinada"""
-    def __init__(self, GIIN: Optional["Giin"], CNPJ: "Cnpj", NIF: Optional[List["Nif"]], nomePatrocinado: "Nomepatrocinado", tpNome: Optional["Tpnome"], endereco: "Endereco", tpEndereco: Optional["Tpendereco"], EnderecoOutros: Optional[List["Enderecooutros"]], paisResid: List["Paisresid"]):
+    def __init__(self, GIIN: Optional["Giin"], CNPJ: "Cnpj", NIF: Optional[List["Nif"]], nomePatrocinado: "Nomepatrocinado", tpNome: Optional["Tpnome"], endereco: "EnderecoEntidadePatrocinada", tpEndereco: Optional["Tpendereco"], EnderecoOutros: Optional[List["Enderecooutros"]], paisResid: List["Paisresid"]):
         self.GIIN = GIIN
         self.CNPJ = CNPJ
         self.NIF = NIF
@@ -464,7 +464,7 @@ class Nif:
         self.tpNIF = tpNIF
 
 
-class Endereco:
+class EnderecoEntidadePatrocinada:
     """Endereco da Entidade Patrocinada"""
     def __init__(self, enderecoLivre: "Enderecolivre", CEP: "Cep", municipio: "Municipio", pais: "Pais"):
         self.enderecoLivre = enderecoLivre

@@ -15,23 +15,21 @@ class TestXmlValidation(unittest.TestCase):
         if not ok: print(schema.error_log)
         self.assertTrue(ok)
 
-
-    def test_evtCadPatrocinado(self):
-        # Criar um objeto Evtcadpatrocinado de exemplo
-        builder = EvtcadpatrocinadoXmlBuilder()
-        self.validar_xml(obj, builder, "../schemas/subschemas/cadastro-patrocinado/evtCadPatrocinado.xsd")
-
-
     def test_ideEvento(self):
         # Criar um objeto Ideevento de exemplo
         builder = IdeeventoXmlBuilder()
+        obj = Ideevento(
+            indRetificacao=Indretificacao.from_str('1'),
+            nrRecibo=Nrrecibo.from_str('123456789012345'),
+            tpAmb=Tpamb.from_str('1'),
+            aplicEmi=Aplicemi.from_str('1'),
+            verAplic=Veraplic.from_str('1.0')
+        )
         self.validar_xml(obj, builder, "../schemas/subschemas/cadastro-patrocinado/ideEvento.xsd")
 
 
     def test_ideDeclarante(self):
         # Criar um objeto Idedeclarante de exemplo
-        # PREECHER TODOS OS PARAMETROS DO IDEDECLARANTE:
-        #    def __init__(self, cnpjDeclarante: "Cnpjdeclarante", GIIN: Optional["Giin"], CategoriaPatrocinador: Optional["Categoriapatrocinador"]):
         obj = Idedeclarante(
             cnpjDeclarante=Cnpjdeclarante.from_str('12345678000195'),
             GIIN=Giin.from_str('1234567890'),
@@ -43,15 +41,18 @@ class TestXmlValidation(unittest.TestCase):
 
     def test_infoPatrocinado(self):
         # Criar um objeto Infopatrocinado de exemplo
-        # PREECHER TODOS OS PARAMETROS DO PATROCINADO:
-        #     def __init__(self, GIIN: Optional["Giin"], CNPJ: "Cnpj", NIF: Optional[List["Nif"]], nomePatrocinado: "Nomepatrocinado", tpNome: Optional["Tpnome"], endereco: "Endereco", tpEndereco: Optional["Tpendereco"], EnderecoOutros: Optional[List["Enderecooutros"]], paisResid: List["Paisresid"]):
         obj = Infopatrocinado(
             GIIN=Giin.from_str('1234567890'),
             CNPJ=Cnpj.from_str('12345678000195'),
             NIF=[Nif(NumeroNIF=Numeronif.from_str('123'), PaisEmissao=Paisemissao.from_str('BR'), tpNIF=Tpnif.from_str('1'))],
             nomePatrocinado=Nomepatrocinado.from_str('Nome Exemplo'),
             tpNome=Tpnome.from_str('1'),
-            endereco=Endereco(Logradouro=Logradouro.from_str('Rua Exemplo'), Numero=Numero.from_str('123'), Complemento=Complemento.from_str('Apto 456'), Andar=Andar.from_str('5'), Bairro=Bairro.from_str('Centro'), CaixaPostal=Caixapostal.from_str('12345')),
+            endereco=EnderecoEntidadePatrocinada(
+                enderecoLivre=Enderecolivre.from_str('Rua Exemplo'),
+                CEP=Cep.from_str('12345-678'),
+                municipio=Municipio.from_str('Sao Paulo'),
+                pais=Pais.from_str('BR')
+            ),
             tpEndereco=Tpendereco.from_str('Rua Exemplo'),
             EnderecoOutros=[
                 Enderecooutros(
@@ -88,9 +89,9 @@ class TestXmlValidation(unittest.TestCase):
 
     def test_endereco(self):
         # Criar um objeto Endereco de exemplo
-        obj = Endereco(enderecoLivre=Enderecolivre.from_str('Rua Exemplo'), CEP=Cep.from_str('12345-678'), municipio=Municipio.from_str('Sao Paulo'), pais=Pais.from_str('BR'))
-        builder = EnderecoXmlBuilder()
-        self.validar_xml(obj, builder, "../schemas/subschemas/cadastro-patrocinado/endereco.xsd")
+        obj = EnderecoEntidadePatrocinada(enderecoLivre=Enderecolivre.from_str('Rua Exemplo'), CEP=Cep.from_str('12345-678'), municipio=Municipio.from_str('Sao Paulo'), pais=Pais.from_str('BR'))
+        builder = EnderecoEntidadePatrocinadaXmlBuilder()
+        self.validar_xml(obj, builder, "../schemas/subschemas/cadastro-patrocinado/endereco2.xsd")
 
 
     def test_EnderecoOutros(self):

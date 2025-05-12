@@ -61,7 +61,7 @@ class InfopatrocinadoXmlBuilder(XmlBuilderInterface):
                 el.append(NifXmlBuilder().build(item))
         XmlAdapter.append_child(el, 'nomePatrocinado', str(obj.nomePatrocinado))
         if obj.tpNome: XmlAdapter.append_child(el, 'tpNome', str(obj.tpNome))
-        el.append(EnderecoXmlBuilder().build(obj.endereco))
+        el.append(EnderecoEntidadePatrocinadaXmlBuilder().build(obj.endereco))
         if obj.tpEndereco: XmlAdapter.append_child(el, 'tpEndereco', str(obj.tpEndereco))
         if obj.EnderecoOutros:
             for item in obj.EnderecoOutros:
@@ -81,8 +81,8 @@ class NifXmlBuilder(XmlBuilderInterface):
         return el
 
 
-class EnderecoXmlBuilder(XmlBuilderInterface):
-    def build(self, obj: Endereco) -> ET.Element:
+class EnderecoEntidadePatrocinadaXmlBuilder(XmlBuilderInterface):
+    def build(self, obj: EnderecoEntidadePatrocinada) -> ET.Element:
         el = XmlAdapter.create_element("endereco")
         XmlAdapter.append_child(el, 'enderecoLivre', str(obj.enderecoLivre))
         XmlAdapter.append_child(el, 'CEP', str(obj.CEP))
@@ -114,7 +114,7 @@ class EnderecoestruturaXmlBuilder(XmlBuilderInterface):
 
 class EnderecoXmlBuilder(XmlBuilderInterface):
     def build(self, obj: Endereco) -> ET.Element:
-        el = XmlAdapter.create_element("endereco")
+        el = XmlAdapter.create_element("Endereco")
         if obj.Logradouro: XmlAdapter.append_child(el, 'Logradouro', str(obj.Logradouro))
         if obj.Numero: XmlAdapter.append_child(el, 'Numero', str(obj.Numero))
         if obj.Complemento: XmlAdapter.append_child(el, 'Complemento', str(obj.Complemento))
