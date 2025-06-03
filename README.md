@@ -1,7 +1,5 @@
 # SISCOF e-Financeira
 
-**SISCOF e-Financeira** é um sistema desenvolvido em Python para auxiliar na geração e gestão de arquivos XML para o sistema e-Financeira, que é obrigatório para instituições financeiras no Brasil reportarem suas operações financeiras à Receita Federal.
-
 ## 🏦 Visão Geral
 
 O **SISCOF e-Financeira** é uma ferramenta projetada para facilitar o cumprimento das obrigações legais de relatórios financeiros eletrônicos (e-Financeira) exigidos pela Receita Federal do Brasil ([Receita Federal](http://sped.rfb.gov.br/projeto/show/1179)). O sistema permite a criação, validação e gerenciamento de arquivos XML que seguem os padrões estabelecidos para a e-Financeira, abrangendo funcionalidades como cadastro de patrocinados e intermediários, exclusão de registros, fechamento de períodos contábeis e geração de relatórios de movimentação financeira.
