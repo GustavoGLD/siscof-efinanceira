@@ -43,7 +43,7 @@ O projeto é organizado em várias pastas, cada uma com um propósito específic
 | &nbsp;&nbsp; `mov_ov_fin` | Módulo para movimentos de operações financeiras. |
 | **tests** | Contém testes unitários para validar as funcionalidades implementadas. |
 
-Além disso, há arquivos como `generate_evt.py` e `generate_xsds.py`, que provavelmente são utilizados para gerar eventos e esquemas XML, respectivamente.
+Além disso, há arquivos como `generate_evt.py` e `generate_xsds.py`, que são utilizados para gerar eventos e esquemas XML, respectivamente.
 
 ## 🛠️ Tecnologias Utilizadas
 
