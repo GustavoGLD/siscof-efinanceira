@@ -20,6 +20,12 @@ O sistema oferece as seguintes funcionalidades principais, baseadas na estrutura
 - **Movimento de Operações Financeiras Anual**: Gera relatórios ou movimentações anuais de operações financeiras.
 - **Movimento de Operações Financeiras**: Gera relatórios ou movimentações de operações financeiras em períodos mais curtos.
 
+## 📷 Imagens
+
+![image](https://github.com/user-attachments/assets/29e4fd05-85c4-4091-9a62-ebd2d54744b5)
+![image](https://github.com/user-attachments/assets/758a16f6-95c1-4a6b-87e6-df6f388dffee)
+
+
 ## 🗂 Arquitetura & Estrutura de Código
 
 O projeto é organizado em várias pastas, cada uma com um propósito específico:
