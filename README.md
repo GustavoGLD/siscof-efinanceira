@@ -49,7 +49,7 @@ Além disso, há arquivos como `generate_evt.py` e `generate_xsds.py`, que são 
 
 - **Python**: Linguagem de programação utilizada para o desenvolvimento do sistema.
 - **XML**: Utilizado para a estruturação dos dados de e-Financeira, com base nos esquemas fornecidos.
-- **Bibliotecas Python**: Provavelmente utiliza bibliotecas como `xml.etree.ElementTree` ou `lxml` para manipulação de XML. Outras bibliotecas podem ser necessárias para gerenciamento de dados ou integração com serviços web.
+- **xml.etree.ElementTree** e **lxml**: manipulação de XML.
 
 ## ⚙️ Instalação e Configuração
 
